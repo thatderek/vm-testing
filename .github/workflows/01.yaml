@@ -6,10 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: which packer
+      - run: sudo apt-get install -y virtualbox
       - run: which VBoxManage
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: sudo apt-get install -y virtualbox
       - run: packer init . 
       - run: packer build init.pkr.hcl

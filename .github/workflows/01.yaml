@@ -1,0 +1,9 @@
+name: Test VM Build
+run-name: Testing VM Build
+on: [push]
+jobs:
+  check-apps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: which packer

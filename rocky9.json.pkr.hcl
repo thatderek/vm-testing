@@ -23,12 +23,12 @@ variable "disk_size" {
 
 variable "iso_checksum" {
   type    = string
-  default = "fc6b306b9fc8d327d7545373ce88c48bd1f7e84d29548814a91e84676b7d26e4"
+  default = "c7e95e3dba88a1f68fff8b7d4e66adf6f76ac4fba2e246a83c46ab79574c78a8"
 }
 
 variable "iso_url" {
   type    = string
-  default = "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.0-x86_64-boot.iso"
+  default = "https://download.rockylinux.org/pub/rocky/9/isos/x86_64/Rocky-9.4-x86_64-boot.iso"
 }
 
 variable "memsize" {

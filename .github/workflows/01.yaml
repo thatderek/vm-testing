@@ -5,7 +5,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Enable KVM group perms
+        run: |
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
       - uses: actions/checkout@v4
-      - run: sudo apt-get install -y virtualbox
-      - run: packer init .
-      - run: packer build rocky9.json.pkr.hcl
+      - run: |
+          sudo apt-get install -y virtualbox
+          packer init rhel9.pkr.hcl
+          CPUS=`lscpu | grep "^CPU(s):" | grep -o '[0-9]'`
+          MEMS=`free -b | awk '/^Mem:/ {total=$2; reduced=total*0.85; mb=reduced/(1024*1024); printf "%.0f\n", mb}'`
+          echo "CPUS: $CPUS"
+          echo "MEMS: $MEMS"
+          packer build -var "cpus=$CPUS" -var "memory=$MEMS" rhel9.pkr.hcl
+          tree .
